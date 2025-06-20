@@ -14,12 +14,6 @@ const InventoryForm = () => {
     };
     return (
         <div>
-            {/* {formFieldData.map((item) => {
-                return <div key={item.label}>
-
-                </div>
-            })} */}
-
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 {formFieldData.map((field) => (
                     <Controller

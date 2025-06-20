@@ -74,10 +74,10 @@ export default function CustomDropdown({
         </div>
 
         <label
-          className={`absolute left-3 transition-all px-1 pointer-events-none ${showError ? "text-red-500" : "text-gray-500"
+          className={`absolute  transition-all px-1 pointer-events-none ${showError ? "text-red-500" : "text-gray-500"
             } ${showFloatingLabel
-              ? "text-sm -top-3 bg-white"
-              : "top-2 bg-white"
+              ? "text-sm -top-3 left-3  bg-white"
+              : "top-2 left-[0.5] pl-2.5 bg-white"
             }`}
         >
           {label || "Select an option "} {required && <span className="text-red-500">*</span>}

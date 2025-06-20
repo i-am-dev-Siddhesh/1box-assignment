@@ -33,7 +33,7 @@ const Inventory = () => {
       {/* Event Section */}
       <div className="mx-5  flex w-full items-center">
         <div className='flex gap-5 items-center w-full'>
-          <div className=''>
+          <div className='w-[40%]'>
             <CustomDropdown
               value={eventVal}
               onChange={setEventVal}
@@ -62,7 +62,7 @@ const Inventory = () => {
       </div>
       <hr className="text-[#f1f1f6] border-[1.9px]" />
       <div className='mx-5'>
-        <InventoryForm />
+        {/* <InventoryForm /> */}
       </div>
     </div>
   );
