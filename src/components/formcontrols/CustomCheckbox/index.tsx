@@ -34,7 +34,6 @@ export default function CustomCheckbox({
     }
     return icon;
   };
-  console.log('leftIcon',leftIcon);
   
   return (
     <div className="relative flex items-start">

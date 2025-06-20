@@ -25,9 +25,7 @@ export default function CustomInput({
   isSubmitted = false,
   leftIcon,
   rightIcon,
-}: CustomInputProps) {
-  console.log('rightIcon',rightIcon);
-  
+}: CustomInputProps) {  
   const [isFocused, setIsFocused] = useState(false);
   const [isTouched, setIsTouched] = useState(false);
 
