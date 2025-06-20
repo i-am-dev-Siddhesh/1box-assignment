@@ -1,12 +1,13 @@
 import { Controller, useForm } from 'react-hook-form';
 import formFieldData from './form.data';
 import FormController from '@/components/Formcontrols';
+import { IoMdAdd } from 'react-icons/io';
 
 const InventoryForm = () => {
     const {
         control,
         handleSubmit,
-        formState: { errors },
+        formState: { errors, isSubmitting },
     } = useForm();
 
     const onSubmit = (data: any) => {
@@ -14,39 +15,47 @@ const InventoryForm = () => {
         // API Integration
     };
     return (
-        <div className=''>
-            <form onSubmit={handleSubmit(onSubmit)} className="w-full">
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-                    {formFieldData.map((field) => (
-                        <Controller
-                            key={field.name}
-                            name={field.name}
-                            control={control}
-                            rules={{
-                                required: field.required ? `${field.label} is required` : false,
-                            }}
-                            render={({ field: controllerField, fieldState }) => (
-                                <div className=''>
-                                    <FormController
-                                        field={field}
-                                        value={controllerField.value}
-                                        onChange={controllerField.onChange}
-                                        error={fieldState.error}
-                                    />
-                                </div>
-                            )}
-                        />
-                    ))}
-                </div>
-                <div className="mt-8 col-span-full">
+        <div className="">
+
+            <div className='mx-5'>
+                <form onSubmit={handleSubmit(onSubmit)} className="w-full">
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-10">
+                        {formFieldData.map((field) => (
+                            <Controller
+                                key={field.name}
+                                name={field.name}
+                                control={control}
+                                rules={{
+                                    required: field.required ? `${field.label} is required` : false,
+                                }}
+                                render={({ field: controllerField, fieldState }) => (
+                                    <div>
+                                        <FormController
+                                            field={field}
+                                            value={controllerField.value}
+                                            onChange={controllerField.onChange}
+                                            error={fieldState.error}
+                                        />
+                                    </div>
+                                )}
+                            />
+                        ))}
+                    </div>
+                </form>
+                <hr className="text-[#f1f1f6] border-[1.9px] my-10" />
+                <div className="flex justify-end">
                     <button
-                        type="submit"
-                        className="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+                        type="button"
+                        onClick={handleSubmit(onSubmit)}
+                        disabled={isSubmitting}
+                        className={`flex cursor-pointer items-center gap-1 px-4 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 transition ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
+                            }`}
                     >
-                        Submit
+                        <IoMdAdd />
+                        {isSubmitting ? 'Submitting...' : 'Add Listing'}
                     </button>
                 </div>
-            </form>
+            </div>
         </div>
     )
 }

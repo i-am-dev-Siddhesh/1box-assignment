@@ -61,9 +61,7 @@ const Inventory = () => {
         </div>
       </div>
       <hr className="text-[#f1f1f6] border-[1.9px]" />
-      <div className="mx-5">
-        <InventoryForm />
-      </div>
+      <InventoryForm />
     </div>
   );
 };
