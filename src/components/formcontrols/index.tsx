@@ -8,7 +8,7 @@ type FormField = {
     name: string;
     type: string;
     required: boolean;
-    options?: string[];
+    options?: string[] | number[];
     note?: string
 };
 

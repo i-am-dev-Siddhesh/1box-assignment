@@ -23,7 +23,7 @@ export default function CustomDatePicker({
     const showError = required && (isSubmitted) && value === "";
 
     return (
-        <div className="w-full">
+        <div className="">
             <div
                 className="relative"
 

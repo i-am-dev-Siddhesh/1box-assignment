@@ -4,13 +4,27 @@
         "label": "Ticket Type",
         "type": "select",
         "required": true,
+        "options": [
+            "General Admission",
+            "VIP",
+            "Premium",
+            "Student",
+            "Season Pass"
+        ],
         "note": "Asterisk (*) indicates required field"
     },
     {
         "name": "quantity",
         "label": "Quantity",
-        "type": "number",
-        "required": true
+        "type": "select",
+        "required": true,
+        "options": [
+            1,
+            5,
+            10,
+            25,
+            50
+        ]
     },
     {
         "name": "splitType",
@@ -19,14 +33,23 @@
         "required": false,
         "options": [
             "None",
-            "Not Seated Together"
+            "Not Seated Together",
+            "Partial Group",
+            "Even Split"
         ]
     },
     {
         "name": "seatingArrangement",
         "label": "Seating Arrangement",
         "type": "select",
-        "required": true
+        "required": true,
+        "options": [
+            "Reserved Seating",
+            "General Admission",
+            "Standing Room",
+            "Box Seats",
+            "Balcony"
+        ]
     },
     {
         "name": "maxDisplayQuantity",
@@ -39,7 +62,14 @@
         "name": "fanArea",
         "label": "Fan Area",
         "type": "select",
-        "required": false
+        "required": false,
+        "options": [
+            "Home Fans",
+            "Away Fans",
+            "Family Zone",
+            "Premium Lounge",
+            "Disabled Access"
+        ]
     },
     {
         "name": "category",
@@ -47,7 +77,10 @@
         "type": "select",
         "required": true,
         "options": [
-            "Away Fans Section"
+            "Away Fans Section",
+            "Home Fans Section",
+            "Neutral Zone",
+            "Premium"
         ]
     },
     {
@@ -56,7 +89,11 @@
         "type": "select",
         "required": false,
         "options": [
-            "Longside Lower Tier"
+            "Longside Lower Tier",
+            "Longside Upper Tier",
+            "Shortside East",
+            "Shortside West",
+            "Center Box"
         ]
     },
     {
@@ -64,28 +101,34 @@
         "label": "Row",
         "type": "number",
         "required": false,
-        "value": 5
+        "value": 5,
+        "min": 1,
+        "max": 50
     },
     {
         "name": "firstSeat",
         "label": "First Seat",
         "type": "number",
         "required": false,
-        "value": 3
+        "value": 3,
+        "min": 1,
+        "max": 100
     },
     {
         "name": "faceValue",
         "label": "Face Value",
         "type": "currency",
         "required": false,
-        "value": 90000
+        "value": 90000,
+        "currency": "GBP"
     },
     {
         "name": "payoutPrice",
         "label": "Payout Price",
         "type": "currency",
         "required": true,
-        "value": 90000
+        "value": 90000,
+        "currency": "GBP"
     },
     {
         "name": "benefits",
@@ -93,7 +136,11 @@
         "type": "select",
         "required": false,
         "options": [
-            "None"
+            "None",
+            "Early Entry",
+            "Meet & Greet",
+            "Merchandise Pack",
+            "Food Voucher"
         ]
     },
     {
@@ -102,7 +149,11 @@
         "type": "select",
         "required": false,
         "options": [
-            "None"
+            "None",
+            "No Alcohol",
+            "Age Restricted",
+            "No Re-entry",
+            "Dress Code"
         ]
     },
     {
@@ -110,7 +161,9 @@
         "label": "Date to Ship",
         "type": "date",
         "required": false,
-        "value": "29/11/2014"
+        "value": "29/11/2014",
+        "min": "01/11/2014",
+        "max": "31/12/2014"
     },
     {
         "name": "ticketsInHand",
@@ -122,6 +175,7 @@
         "name": "uploadTickets",
         "label": "Upload Tickets",
         "type": "file",
-        "required": false
+        "required": false,
+        "accept": ".pdf,.png,.jpg"
     }
 ]

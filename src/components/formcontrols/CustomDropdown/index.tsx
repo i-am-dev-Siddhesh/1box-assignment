@@ -3,7 +3,7 @@ import { useState } from "react";
 interface CustomDropdownProps {
   value: string;
   onChange: (value: string) => void;
-  options: string[];
+  options: string[] | number[];
   label: string;
   required?: boolean;
   errorMessage?: string;
@@ -76,8 +76,8 @@ export default function CustomDropdown({
         <label
           className={`absolute  transition-all px-1 pointer-events-none ${showError ? "text-red-500" : "text-gray-500"
             } ${showFloatingLabel
-              ? "text-sm -top-3 left-3  bg-white"
-              : "top-2 left-[0.5] pl-2.5 bg-white"
+              ? "text-sm -top-3 left-3 bg-white"
+              : "top-2 left-[1] pl-3.5  w-[90%]   bg-white"
             }`}
         >
           {label || "Select an option "} {required && <span className="text-red-500">*</span>}
@@ -85,7 +85,7 @@ export default function CustomDropdown({
 
       </div>
       {showError && (
-        <p className="mt-1 absolute text-sm text-red-600">{errorMessage}</p>
+        <p className="mt-1 text-sm text-red-600">{errorMessage}</p>
       )}
     </div>
   );

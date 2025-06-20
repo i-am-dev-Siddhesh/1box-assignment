@@ -13,8 +13,8 @@ const InventoryForm = () => {
         console.log('Form Data:', data);
     };
     return (
-        <div>
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <div className=''>
+            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-wrap gap-5">
                 {formFieldData.map((field) => (
                     <Controller
                         key={field.name}
@@ -24,12 +24,14 @@ const InventoryForm = () => {
                             required: field.required ? `${field.label} is required` : false,
                         }}
                         render={({ field: controllerField, fieldState }) => (
-                            <FormController
-                                field={field}
-                                value={controllerField.value}
-                                onChange={controllerField.onChange}
-                                error={fieldState.error}
-                            />
+                            <div className='min-w-[18%]'>
+                                <FormController
+                                    field={field}
+                                    value={controllerField.value}
+                                    onChange={controllerField.onChange}
+                                    error={fieldState.error}
+                                />
+                            </div>
                         )}
                     />
                 ))}

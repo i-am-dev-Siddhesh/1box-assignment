@@ -32,8 +32,8 @@ const Inventory = () => {
 
       {/* Event Section */}
       <div className="mx-5  flex w-full items-center">
-        <div className='flex gap-5 items-center w-full'>
-          <div className='w-[40%]'>
+        <div className="flex gap-5 items-center w-full">
+          <div className="w-[40%]">
             <CustomDropdown
               value={eventVal}
               onChange={setEventVal}
@@ -55,14 +55,14 @@ const Inventory = () => {
               Stamford Bridge, London, United Kingdom
             </div>
           </div>
-          <div className=''>
-            <p className='font-bold text-[#00A3ED]'>View Map</p>
+          <div className="">
+            <p className="font-bold text-[#00A3ED]">View Map</p>
           </div>
         </div>
       </div>
       <hr className="text-[#f1f1f6] border-[1.9px]" />
-      <div className='mx-5'>
-        {/* <InventoryForm /> */}
+      <div className="mx-5">
+        <InventoryForm />
       </div>
     </div>
   );

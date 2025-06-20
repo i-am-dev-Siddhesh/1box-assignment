@@ -32,7 +32,7 @@ export default function CustomInput({
   const showError = required && (isTouched || isSubmitted) && value === "";
 
   return (
-    <div className="w-full h-full relative">
+    <div className="relative">
       {/* Left Icon */}
       {leftIcon && (
         <div className="absolute border-r-1 border-gray-300 z-2 h-full flex items-center justify-center pl-3 pr-3 ml-2 pointer-events-none">
@@ -50,7 +50,6 @@ export default function CustomInput({
 
 
         <input
-          type={type}
           className={`w-full text-gray-500 py-2 border rounded-md focus:outline-none focus:ring-2 bg-white ${leftIcon ? "pl-15" : "pl-3"
             } ${rightIcon ? "pr-10" : "pr-3"} ${showError
               ? "border-red-500 focus:ring-red-200"
