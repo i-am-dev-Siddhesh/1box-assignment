@@ -10,7 +10,7 @@ interface DatePickerProps {
     isSubmitted?: boolean;
 }
 
-export default function DatePicker({
+export default function CustomDatePicker({
     value,
     onChange,
     placeholder = "",

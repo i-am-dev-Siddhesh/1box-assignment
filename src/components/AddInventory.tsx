@@ -1,8 +1,10 @@
 import { useState } from 'react';
-import CustomDropdown from './formcontrols/CustomDropdown';
-import CustomInput from './formcontrols/CustomTextInput';
-import DatePicker from './formcontrols/CustomDatepicker';
 import { TbEyeBitcoin } from 'react-icons/tb';
+import CustomDatePicker from './Formcontrols/CustomDatepicker';
+import CustomDropdown from './Formcontrols/CustomDropdown';
+import CustomInput from './Formcontrols/CustomTextInput';
+import DateDisplay from './DateDisplay';
+import TimeDisplay from './TimeDisplay';
 
 export default function AddInventory() {
   const [selectedValue, setSelectedValue] = useState('');
@@ -22,7 +24,7 @@ export default function AddInventory() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
+    <div className=" mx-auto p-6 bg-white rounded-lg shadow-md">
       <form onSubmit={handleSubmit}>
         <div className="mb-6 flex gap-10">
           <CustomInput
@@ -33,6 +35,8 @@ export default function AddInventory() {
               <TbEyeBitcoin className="h-5 w-5 text-gray-400" />
             }
           />
+                  <DateDisplay />
+                  {/* <TimeDisplay/> */}
           <CustomDropdown
             value={selectedValue}
             onChange={setSelectedValue}
@@ -50,7 +54,7 @@ export default function AddInventory() {
             errorMessage="Please enter a valid email"
             isSubmitted={formSubmitted}
           />
-          <DatePicker
+          <CustomDatePicker
             value={dateValue}
             onChange={setDateValue}
             label="Birth Date"
