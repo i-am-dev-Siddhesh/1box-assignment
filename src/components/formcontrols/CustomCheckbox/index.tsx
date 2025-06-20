@@ -1,4 +1,5 @@
 import { ReactNode, useState } from "react";
+import { IconType } from "react-icons";
 
 interface CustomCheckboxProps {
   value: boolean;
@@ -25,24 +26,33 @@ export default function CustomCheckbox({
 }: CustomCheckboxProps) {
   const [isTouched, setIsTouched] = useState(false);
   const showError = required && (isTouched || isSubmitted) && !value;
-
+    // Helper function to render icons
+  const renderIcon = (icon: IconType | ReactNode) => {
+    if (typeof icon === 'function') {
+      const IconComponent = icon;
+      return <IconComponent className="h-5 w-5 text-gray-400" />;
+    }
+    return icon;
+  };
+  console.log('leftIcon',leftIcon);
+  
   return (
     <div className="relative flex items-start">
       {/* Left Icon */}
-      {leftIcon && (
-        <div className="mr-3 flex items-center h-5 pointer-events-none">
-          {leftIcon}
+     {leftIcon && (
+        <div className="absolute border-r-1 border-gray-300 z-2 h-full flex items-center justify-center pl-3 pr-3 ml-2 pointer-events-none">
+          {renderIcon(leftIcon)}
         </div>
       )}
 
-      <div className={`flex gap-2 cursor-pointer w-full text-gray-500 py-2 border rounded-md focus:outline-none focus:ring-2 bg-white ${leftIcon ? "pl-15" : "pl-3"
+      <div className={`flex gap-2 justify-between cursor-pointer w-full text-gray-500 py-2 border rounded-md focus:outline-none focus:ring-2 bg-white ${leftIcon ? "pl-15" : "pl-3"
         } ${rightIcon ? "pr-10" : "pr-3"} ${showError
           ? "border-red-500 focus:ring-red-200"
           : "border-gray-300 focus:ring-blue-500 focus:border-blue-500"
         }`}>
         <label
           htmlFor={id}
-          className={`ml-2 block cursor-pointer text-sm ${showError ? "text-red-500" : "text-gray-700"}`}
+          className={`ml-2 block cursor-pointer text-sm ${showError ? "text-red-500" : "text-gray-500"}`}
         >
           {label}
         </label>
@@ -63,8 +73,8 @@ export default function CustomCheckbox({
 
       {/* Right Icon */}
       {rightIcon && (
-        <div className="ml-3 flex items-center h-5 pointer-events-none">
-          {rightIcon}
+        <div className="absolute border-r-1 border-gray-300 z-2 h-full flex items-center justify-center pl-3 pr-3 ml-2 pointer-events-none">
+          {renderIcon(rightIcon)}
         </div>
       )}
 

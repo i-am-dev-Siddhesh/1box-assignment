@@ -26,7 +26,7 @@ const InventoryForm = () => {
                                 required: field.required ? `${field.label} is required` : false,
                             }}
                             render={({ field: controllerField, fieldState }) => (
-                                <div className={``}>
+                                <div className=''>
                                     <FormController
                                         field={field}
                                         value={controllerField.value}

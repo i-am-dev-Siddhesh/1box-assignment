@@ -1,3 +1,5 @@
+import { FaRegHandPaper } from "react-icons/fa";
+import { FiUpload } from "react-icons/fi";
 import { PiCurrencyGbp } from "react-icons/pi";
 
 const inventoryFormFields = [
@@ -157,6 +159,7 @@ const inventoryFormFields = [
     label: 'Tickets in hand',
     type: 'checkbox',
     required: false,
+    leftIcon: FaRegHandPaper 
   },
   {
     name: 'uploadTickets',
@@ -164,6 +167,7 @@ const inventoryFormFields = [
     type: 'file',
     required: false,
     accept: '.pdf,.png,.jpg',
+    leftIcon: FiUpload 
   },
 ];
 

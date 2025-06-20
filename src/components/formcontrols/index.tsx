@@ -3,6 +3,7 @@ import CustomDatePicker from './CustomDatepicker';
 import CustomDropdown from './CustomDropdown';
 import CustomInput from './CustomTextInput';
 import CustomCheckbox from './CustomCheckbox';
+import CustomUpload from './CustomUpload';
 
 type FormField = {
   label: string;
@@ -13,6 +14,8 @@ type FormField = {
   note?: string;
   rightIcon?: any;
   leftIcon?: any;
+  accept?: string; // For file uploads
+  multiple?: boolean; // For file uploads
 };
 
 type FormControllerProps = {
@@ -54,6 +57,8 @@ const FormController: React.FC<FormControllerProps> = ({
             value={value}
             onChange={onChange}
             errorMessage={error?.message}
+          // leftIcon={field.leftIcon}
+          // rightIcon={field.rightIcon}
           />
         );
       case 'checkbox':
@@ -64,6 +69,22 @@ const FormController: React.FC<FormControllerProps> = ({
             value={value}
             onChange={onChange}
             errorMessage={error?.message}
+            leftIcon={field.leftIcon}
+            rightIcon={field.rightIcon}
+          />
+        );
+      case 'file':
+        return (
+          <CustomUpload
+            label={field.label}
+            required={field.required}
+            value={value}
+            onChange={onChange}
+            errorMessage={error?.message}
+            leftIcon={field.leftIcon}
+            rightIcon={field.rightIcon}
+            accept={field.accept}
+            multiple={field.multiple}
           />
         );
       default:
