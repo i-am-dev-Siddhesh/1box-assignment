@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import CustomDropdown from './formcontrols/CustomDropdown';
 import CustomInput from './formcontrols/CustomTextInput';
+import DatePicker from './formcontrols/CustomDatepicker';
+import { TbEyeBitcoin } from 'react-icons/tb';
 
 export default function AddInventory() {
   const [selectedValue, setSelectedValue] = useState('');
   const [email, setEmail] = useState('');
+  const [dateValue, setDateValue] = useState('');
   const [formSubmitted, setFormSubmitted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -22,6 +25,14 @@ export default function AddInventory() {
     <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
       <form onSubmit={handleSubmit}>
         <div className="mb-6 flex gap-10">
+          <CustomInput
+            value={selectedValue}
+            onChange={setSelectedValue}
+            label="Password"
+            rightIcon={
+              <TbEyeBitcoin className="h-5 w-5 text-gray-400" />
+            }
+          />
           <CustomDropdown
             value={selectedValue}
             onChange={setSelectedValue}
@@ -38,6 +49,12 @@ export default function AddInventory() {
             required={true}
             errorMessage="Please enter a valid email"
             isSubmitted={formSubmitted}
+          />
+          <DatePicker
+            value={dateValue}
+            onChange={setDateValue}
+            label="Birth Date"
+            required
           />
         </div>
 
