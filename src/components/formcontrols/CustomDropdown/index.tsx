@@ -4,6 +4,7 @@ interface CustomDropdownProps {
   value: string;
   onChange: (value: string) => void;
   options: string[];
+  label: string;
   required?: boolean;
   errorMessage?: string;
   isSubmitted?: boolean;
@@ -13,6 +14,7 @@ export default function CustomDropdown({
   value,
   onChange,
   options,
+  label,
   required = false,
   errorMessage = "This field is required",
   isSubmitted = false,
@@ -24,7 +26,7 @@ export default function CustomDropdown({
   const showError = required && (isTouched || isSubmitted) && value === "";
 
   return (
-    <div className="w-full">
+    <div className="relative">
       <div
         className="relative"
         onMouseDown={() => setIsFocused(true)}
@@ -34,9 +36,9 @@ export default function CustomDropdown({
         }}
       >
         <select
-          className={`w-full text-gray-500 appearance-none pl-3 pr-10 py-2 border rounded-md focus:outline-none focus:ring-2 bg-white ${showError
-              ? "border-red-500 focus:ring-red-200"
-              : "border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+          className={`w-full text-gray-500 appearance-none pl-${!value ? 16 : 3} pr-10 py-2 border rounded-md focus:outline-none focus:ring-2 bg-white ${showError
+            ? "border-red-500 focus:ring-red-200"
+            : "border-gray-300 focus:ring-blue-500 focus:border-blue-500"
             }`}
           value={value}
           onChange={(e) => {
@@ -78,12 +80,12 @@ export default function CustomDropdown({
               : "top-2 bg-white"
             }`}
         >
-          Select an option {required && <span className="text-red-500">*</span>}
+          {label || "Select an option "} {required && <span className="text-red-500">*</span>}
         </label>
 
       </div>
       {showError && (
-        <p className="mt-1 text-sm text-red-600">{errorMessage}</p>
+        <p className="mt-1 absolute text-sm text-red-600">{errorMessage}</p>
       )}
     </div>
   );
