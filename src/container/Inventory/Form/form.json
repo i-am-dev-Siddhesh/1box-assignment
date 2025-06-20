@@ -1,0 +1,127 @@
+[
+    {
+        "name": "ticketType",
+        "label": "Ticket Type",
+        "type": "select",
+        "required": true,
+        "note": "Asterisk (*) indicates required field"
+    },
+    {
+        "name": "quantity",
+        "label": "Quantity",
+        "type": "number",
+        "required": true
+    },
+    {
+        "name": "splitType",
+        "label": "Split Type",
+        "type": "select",
+        "required": false,
+        "options": [
+            "None",
+            "Not Seated Together"
+        ]
+    },
+    {
+        "name": "seatingArrangement",
+        "label": "Seating Arrangement",
+        "type": "select",
+        "required": true
+    },
+    {
+        "name": "maxDisplayQuantity",
+        "label": "Max Display Quantity",
+        "type": "number",
+        "required": false,
+        "note": "Has 'Y' indicator but no asterisk"
+    },
+    {
+        "name": "fanArea",
+        "label": "Fan Area",
+        "type": "select",
+        "required": false
+    },
+    {
+        "name": "category",
+        "label": "Category",
+        "type": "select",
+        "required": true,
+        "options": [
+            "Away Fans Section"
+        ]
+    },
+    {
+        "name": "sectionBlock",
+        "label": "Section/Block",
+        "type": "select",
+        "required": false,
+        "options": [
+            "Longside Lower Tier"
+        ]
+    },
+    {
+        "name": "row",
+        "label": "Row",
+        "type": "number",
+        "required": false,
+        "value": 5
+    },
+    {
+        "name": "firstSeat",
+        "label": "First Seat",
+        "type": "number",
+        "required": false,
+        "value": 3
+    },
+    {
+        "name": "faceValue",
+        "label": "Face Value",
+        "type": "currency",
+        "required": false,
+        "value": 90000
+    },
+    {
+        "name": "payoutPrice",
+        "label": "Payout Price",
+        "type": "currency",
+        "required": true,
+        "value": 90000
+    },
+    {
+        "name": "benefits",
+        "label": "Benefits",
+        "type": "select",
+        "required": false,
+        "options": [
+            "None"
+        ]
+    },
+    {
+        "name": "restrictions",
+        "label": "Restrictions",
+        "type": "select",
+        "required": false,
+        "options": [
+            "None"
+        ]
+    },
+    {
+        "name": "dateToShip",
+        "label": "Date to Ship",
+        "type": "date",
+        "required": false,
+        "value": "29/11/2014"
+    },
+    {
+        "name": "ticketsInHand",
+        "label": "Tickets in hand",
+        "type": "checkbox",
+        "required": false
+    },
+    {
+        "name": "uploadTickets",
+        "label": "Upload Tickets",
+        "type": "file",
+        "required": false
+    }
+]

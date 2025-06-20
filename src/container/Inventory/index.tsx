@@ -1,11 +1,11 @@
 'use client';
-
 import DateDisplay from '@/components/DateDisplay';
 import CustomDropdown from '@/components/Formcontrols/CustomDropdown';
 import TimeDisplay from '@/components/TimeDisplay';
 import { useState } from 'react';
 import { CiLocationOn } from 'react-icons/ci';
 import { LuMessageSquareText } from 'react-icons/lu';
+import InventoryForm from './Form';
 
 const Inventory = () => {
   const [eventVal, setEventVal] = useState('');
@@ -59,6 +59,10 @@ const Inventory = () => {
             <p className='font-bold text-[#00A3ED]'>View Map</p>
           </div>
         </div>
+      </div>
+      <hr className="text-[#f1f1f6] border-[1.9px]" />
+      <div className='mx-5'>
+        <InventoryForm />
       </div>
     </div>
   );
