@@ -1,4 +1,5 @@
 import { ReactNode, useState } from "react";
+import { IconType } from "react-icons";
 
 interface CustomInputProps {
   value: string;
@@ -9,8 +10,8 @@ interface CustomInputProps {
   required?: boolean;
   errorMessage?: string;
   isSubmitted?: boolean;
-  leftIcon?: ReactNode;
-  rightIcon?: ReactNode;
+  leftIcon?: IconType;
+  rightIcon?:  IconType;
 }
 
 export default function CustomInput({
@@ -25,18 +26,29 @@ export default function CustomInput({
   leftIcon,
   rightIcon,
 }: CustomInputProps) {
+  console.log('rightIcon',rightIcon);
+  
   const [isFocused, setIsFocused] = useState(false);
   const [isTouched, setIsTouched] = useState(false);
 
   const showFloatingLabel = isFocused || value !== "";
   const showError = required && (isTouched || isSubmitted) && value === "";
 
+    // Helper function to render icons
+  const renderIcon = (icon: IconType | ReactNode) => {
+    if (typeof icon === 'function') {
+      const IconComponent = icon;
+      return <IconComponent className="h-5 w-5 text-gray-400" />;
+    }
+    return icon;
+  };
+
   return (
     <div className="relative">
       {/* Left Icon */}
       {leftIcon && (
         <div className="absolute border-r-1 border-gray-300 z-2 h-full flex items-center justify-center pl-3 pr-3 ml-2 pointer-events-none">
-          {leftIcon}
+          {renderIcon(leftIcon)}
         </div>
       )}
       <div
@@ -81,8 +93,8 @@ export default function CustomInput({
       </div>
 
       {rightIcon && (
-        <div className="absolute inset-y-0 right-0 border-l-1 border-gray-300 z-2 h-full flex items-center justify-center pl-3 pr-3 ml-2 pointer-events-none">
-          {rightIcon}
+        <div className=" inset-y-0 right-0 border-l-1 border-gray-300 z-2 h-full flex items-center justify-center pl-3 pr-3 ml-2 pointer-events-none">
+         {renderIcon(rightIcon)}
         </div>
       )}
 
