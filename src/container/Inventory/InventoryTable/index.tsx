@@ -101,16 +101,13 @@
 'use client';
 
 import { CustomTable } from '@/components/CustomTable';
-import React, { useMemo } from 'react';
-import { type ColumnDef } from '@tanstack/react-table';
-import inventoryData from '../Form/form.data';
-import { FaRegHandPaper } from 'react-icons/fa';
-import { PiCurrencyGbp } from 'react-icons/pi';
-import { useForm, Controller } from 'react-hook-form';
 import FormController from '@/components/Formcontrols';
+import { type ColumnDef } from '@tanstack/react-table';
+import { useMemo } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import { FiUpload } from 'react-icons/fi';
+import inventoryData from '../Form/form.data';
 import inventoryFormFields from '../Form/form.fields';
-import MatchHeader from './MatchHeader';
 
 interface InventoryItem {
     id: string;
@@ -204,9 +201,6 @@ const InventoryTable = () => {
 
     return (
         <div className="p-4">
-            <div>
-                {/* <MatchHeader /> */}
-            </div>
             <CustomTable
                 data={control._formValues.inventory}
                 columns={columns}

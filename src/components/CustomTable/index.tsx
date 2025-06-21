@@ -90,7 +90,7 @@ export function CustomTable<TData>({
           </tr>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
-              <th className=' bg-red'>
+              <th className='border-r border-gray-200'>
                 <div className='flex items-center justify-center'>
                   <input type='checkbox' />
                 </div>
@@ -98,7 +98,7 @@ export function CustomTable<TData>({
               {headerGroup.headers.map((header) => (
                 <th
                   key={header.id}
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  className="border-r border-gray-200 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   onClick={header.column.getToggleSortingHandler()}
                 >
                   <div className="flex items-center cursor-pointer hover:bg-gray-100 p-2 rounded">
@@ -116,16 +116,15 @@ export function CustomTable<TData>({
           ))}
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
-
           {table.getRowModel().rows.map((row) => (
             <tr key={row.id}>
-              <td className=' bg-red'>
+              <td className='border-r border-gray-200'>
                 <div className='flex items-center justify-center'>
                   <input type='checkbox' />
                 </div>
               </td>
               {row.getVisibleCells().map((cell) => (
-                <td key={cell.id} className="px-6 py-4 whitespace-nowrap">
+                <td key={cell.id} className="px-6 py-4 whitespace-nowrap border-r border-gray-200">
                   {renderCellContent(cell)}
                 </td>
               ))}
