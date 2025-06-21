@@ -1,10 +1,12 @@
-import { Controller, useForm } from 'react-hook-form';
-import formFieldData from '../../../constants/form.fields';
 import FormController from '@/components/Formcontrols';
-import { IoMdAdd } from 'react-icons/io';
 import { InventoryService } from '@/services/inventory.service';
+import { Controller, useForm } from 'react-hook-form';
+import { IoMdAdd } from 'react-icons/io';
+import formFieldData from '../../../constants/form.fields';
+import useToast from 'src/hooks/useToast';
 
 const InventoryForm = () => {
+    const toast = useToast();
     const {
         control,
         handleSubmit,
@@ -15,10 +17,10 @@ const InventoryForm = () => {
         try {
             console.log('Form Data:', data);
             await InventoryService.create(data)
-        } catch (er) {
-
+            toast.showSuccess('Inventory added successfully!');
+        } catch (error: any) {
+            toast.showError(error.message || "Something went wrong");
         }
-        // API Integration
     };
     return (
         <div className="">

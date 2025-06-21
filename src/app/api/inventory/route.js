@@ -17,9 +17,7 @@ function setInventory(items) {
 }
 
 export async function GET(request) {
-  const items = getInventory();
-  console.log('items',items);
-  
+  const items = getInventory();  
   return Response.json(items);
 }
 

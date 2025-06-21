@@ -30,7 +30,6 @@ const InventoryTable = () => {
     const handleRowSubmit = async (rowData: InventoryItem) => {
         try {
             await InventoryService.create(rowData)
-            console.log('Submitting row:', rowData);
             alert(`Submitted: ${rowData.ticketType || rowData.id}`);
         } catch (err) {
             alert(`Error`);
