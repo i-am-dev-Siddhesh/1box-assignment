@@ -4,7 +4,7 @@ import apiClient from './serverConfig';
 export const InventoryService = {
   async getAll(): Promise<InventoryItem[]> {
     try {
-      return await apiClient.get('/inventory');
+      return (await apiClient.get('/inventory'))?.data || [];
     } catch (error) {
       throw new Error(
         error instanceof Error ? error.message : 'Failed to fetch inventory'

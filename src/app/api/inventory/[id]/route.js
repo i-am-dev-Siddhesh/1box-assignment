@@ -1,13 +1,13 @@
 // import { getInventory, setInventory } from '../route';
 
-// export async function GET(request, { params }) {
+export async function GET(request, { params }) {
 //   const items = getInventory();
 //   const item = items.find(item => item.id === Number(params.id));
 //   if (!item) {
 //     return Response.json({ error: 'Not found' }, { status: 404 });
 //   }
-//   return Response.json(item);
-// }
+  return Response.json("item");
+}
 
 // export async function PUT(request, { params }) {
 //   const items = getInventory();
