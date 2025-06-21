@@ -106,8 +106,8 @@ import { type ColumnDef } from '@tanstack/react-table';
 import { useMemo } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { FiUpload } from 'react-icons/fi';
-import inventoryData from '../Form/form.data';
-import inventoryFormFields from '../Form/form.fields';
+import inventoryData from '../../../constants/form.data';
+import inventoryFormFields from '../../../constants/form.fields';
 import Header from './Header';
 
 interface InventoryItem {
