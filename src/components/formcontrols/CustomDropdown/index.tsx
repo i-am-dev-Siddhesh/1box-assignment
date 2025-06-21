@@ -3,7 +3,8 @@ import { useState } from "react";
 interface CustomDropdownProps {
   value: string;
   onChange: (value: string) => void;
-  options: string[];
+  options: string[] | number[];
+  label: string;
   required?: boolean;
   errorMessage?: string;
   isSubmitted?: boolean;
@@ -13,6 +14,7 @@ export default function CustomDropdown({
   value,
   onChange,
   options,
+  label,
   required = false,
   errorMessage = "This field is required",
   isSubmitted = false,
@@ -24,7 +26,7 @@ export default function CustomDropdown({
   const showError = required && (isTouched || isSubmitted) && value === "";
 
   return (
-    <div className="w-full">
+    <div className="relative">
       <div
         className="relative"
         onMouseDown={() => setIsFocused(true)}
@@ -34,9 +36,9 @@ export default function CustomDropdown({
         }}
       >
         <select
-          className={`w-full text-gray-500 appearance-none pl-3 pr-10 py-2 border rounded-md focus:outline-none focus:ring-2 bg-white ${showError
-              ? "border-red-500 focus:ring-red-200"
-              : "border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+          className={`w-full text-gray-500 appearance-none pl-${!value ? 16 : 3} pr-10 py-2 border rounded-md focus:outline-none focus:ring-2 bg-white ${showError
+            ? "border-red-500 focus:ring-red-200"
+            : "border-gray-300 focus:ring-blue-500 focus:border-blue-500"
             }`}
           value={value}
           onChange={(e) => {
@@ -72,13 +74,13 @@ export default function CustomDropdown({
         </div>
 
         <label
-          className={`absolute left-3 transition-all px-1 pointer-events-none ${showError ? "text-red-500" : "text-gray-500"
+          className={`absolute  transition-all px-1 pointer-events-none ${showError ? "text-red-500" : "text-gray-500"
             } ${showFloatingLabel
-              ? "text-sm -top-3 bg-white"
-              : "top-2 bg-white"
+              ? "text-sm -top-3 left-3 bg-white"
+              : "top-2 left-[1] pl-3.5  w-[90%]   bg-white"
             }`}
         >
-          Select an option {required && <span className="text-red-500">*</span>}
+          {label || "Select an option "} {required && <span className="text-red-500">*</span>}
         </label>
 
       </div>

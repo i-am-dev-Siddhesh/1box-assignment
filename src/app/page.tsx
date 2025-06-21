@@ -1,10 +1,9 @@
-'use client'
-import AddInventory from "@/components/AddInventory";
+import Inventory from "@/container/Inventory";
 
 export default function Home() {
   return (
     <>
-    <AddInventory/>
+      <Inventory />
     </>
   );
 }
