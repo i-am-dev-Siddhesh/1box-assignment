@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { CiLocationOn } from 'react-icons/ci';
 import { LuMessageSquareText } from 'react-icons/lu';
 import InventoryForm from './Form';
+import InventoryTable from './InventoryTable';
 
 const Inventory = () => {
   const [eventVal, setEventVal] = useState('');
@@ -62,6 +63,7 @@ const Inventory = () => {
       </div>
       <hr className="text-[#f1f1f6] border-[1.9px]" />
       <InventoryForm />
+      <InventoryTable />
     </div>
   );
 };

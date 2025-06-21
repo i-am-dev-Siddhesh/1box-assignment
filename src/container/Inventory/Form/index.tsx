@@ -1,5 +1,5 @@
 import { Controller, useForm } from 'react-hook-form';
-import formFieldData from './form.data';
+import formFieldData from './form.fields';
 import FormController from '@/components/Formcontrols';
 import { IoMdAdd } from 'react-icons/io';
 
