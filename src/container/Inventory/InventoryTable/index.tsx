@@ -108,6 +108,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { FiUpload } from 'react-icons/fi';
 import inventoryData from '../Form/form.data';
 import inventoryFormFields from '../Form/form.fields';
+import Header from './Header';
 
 interface InventoryItem {
     id: string;
@@ -202,6 +203,7 @@ const InventoryTable = () => {
     return (
         <div className="p-4">
             <CustomTable
+                header={<Header />}
                 data={control._formValues.inventory}
                 columns={columns}
                 className="shadow overflow-hidden border-b border-gray-200 rounded-lg"
