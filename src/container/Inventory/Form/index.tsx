@@ -2,6 +2,7 @@ import { Controller, useForm } from 'react-hook-form';
 import formFieldData from '../../../constants/form.fields';
 import FormController from '@/components/Formcontrols';
 import { IoMdAdd } from 'react-icons/io';
+import { InventoryService } from '@/services/inventory.service';
 
 const InventoryForm = () => {
     const {
@@ -10,8 +11,13 @@ const InventoryForm = () => {
         formState: { errors, isSubmitting },
     } = useForm();
 
-    const onSubmit = (data: any) => {
-        console.log('Form Data:', data);
+    const onSubmit = async (data: any) => {
+        try {
+            console.log('Form Data:', data);
+            await InventoryService.create(data)
+        } catch (er) {
+
+        }
         // API Integration
     };
     return (
@@ -61,3 +67,23 @@ const InventoryForm = () => {
 }
 
 export default InventoryForm
+
+const d = {
+    "ticketType": "VIP",
+    "quantity": "1",
+    "splitType": "None",
+    "seatingArrangement": "Reserved Seating",
+    "maxDisplayQuantity": "3",
+    "fanArea": "Home Fans",
+    "category": "Away Fans Section",
+    "sectionBlock": "Longside Lower Tier",
+    "row": "2",
+    "firstSeat": "2",
+    "faceValue": "22",
+    "payoutPrice": "2",
+    "benefits": "Early Entry",
+    "restrictions": "None",
+    "dateToShip": "1212-02-21",
+    "ticketsInHand": true,
+    "uploadTickets": {}
+}

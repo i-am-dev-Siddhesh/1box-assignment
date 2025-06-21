@@ -103,19 +103,24 @@
 import { CustomTable } from '@/components/CustomTable';
 import FormController from '@/components/Formcontrols';
 import { type ColumnDef } from '@tanstack/react-table';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { FiUpload } from 'react-icons/fi';
 import inventoryData from '../../../constants/form.data';
 import inventoryFormFields from '../../../constants/form.fields';
 import Header from './Header';
-
-interface InventoryItem {
-    id: string;
-    [key: string]: any;
-}
+import { InventoryService } from '@/services/inventory.service';
 
 const InventoryTable = () => {
+    const [items, setItems] = useState([]);
+
+    useEffect(() => {
+        fetch('/api/inventory')
+            .then(res => res.json())
+            .then(data => setItems(data));
+    }, []);
+
+
     const { control, handleSubmit } = useForm({
         defaultValues: {
             inventory: inventoryData,
@@ -124,10 +129,16 @@ const InventoryTable = () => {
 
 
 
-    const handleRowSubmit = (rowData: InventoryItem) => {
-        console.log('Submitting row:', rowData);
-        // API call or other submission logic here
-        alert(`Submitted: ${rowData.ticketType || rowData.id}`);
+    const handleRowSubmit = async (rowData: InventoryItem) => {
+        try {
+            console.log('rowData',rowData);
+            
+            await InventoryService.create(rowData)
+            console.log('Submitting row:', rowData);
+            alert(`Submitted: ${rowData.ticketType || rowData.id}`);
+        } catch (err) {
+
+        }
     };
 
 
