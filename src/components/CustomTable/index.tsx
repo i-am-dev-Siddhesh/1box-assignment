@@ -11,14 +11,22 @@ import {
   type Cell,
   flexRender,
 } from '@tanstack/react-table';
-import { ReactNode, useState } from 'react';
+import React, {
+  ReactNode,
+  useState,
+  useRef,
+  useEffect,
+  ChangeEvent,
+} from 'react';
 
 interface ICustomTableProps<TData> {
-  header: ReactNode,
+  header?: ReactNode;
   data: TData[];
   columns: ColumnDef<TData>[];
   defaultSorting?: ColumnSort[];
   className?: string;
+  onRowSelect?: (selectedRows: TData[]) => void;
+  enableRowSelection?: boolean;
 }
 
 export function CustomTable<TData>({
@@ -27,8 +35,51 @@ export function CustomTable<TData>({
   columns,
   defaultSorting = [],
   className = '',
+  onRowSelect,
+  enableRowSelection = false,
 }: ICustomTableProps<TData>) {
   const [sorting, setSorting] = useState<SortingState>(defaultSorting);
+  const [selectedRowIds, setSelectedRowIds] = useState<Set<string>>(new Set());
+
+  const selectAllRef = useRef<HTMLInputElement>(null);
+
+  // Set indeterminate state on select all checkbox
+  useEffect(() => {
+    if (selectAllRef.current) {
+      const total = data.length;
+      const selected = selectedRowIds.size;
+      selectAllRef.current.indeterminate = selected > 0 && selected < total;
+    }
+  }, [selectedRowIds, data.length]);
+
+  const toggleAll = (checked: boolean) => {
+    const allIds = data.map((_, idx) => idx.toString());
+    const newSelection: any = checked ? new Set(allIds) : new Set();
+    setSelectedRowIds(newSelection);
+    if (onRowSelect) {
+      onRowSelect(checked ? data : []);
+    }
+  };
+
+  const toggleSingle = (
+    rowId: string,
+    checked: boolean,
+    rowData: TData
+  ) => {
+    const updated = new Set(selectedRowIds);
+    if (checked) {
+      updated.add(rowId);
+    } else {
+      updated.delete(rowId);
+    }
+    setSelectedRowIds(updated);
+    if (onRowSelect) {
+      const selectedData = data.filter((_, idx) =>
+        updated.has(idx.toString())
+      );
+      onRowSelect(selectedData);
+    }
+  };
 
   const table = useReactTable({
     data,
@@ -49,7 +100,6 @@ export function CustomTable<TData>({
   };
 
   const renderCellContent = (cell: Cell<TData, unknown>) => {
-    // Use flexRender for proper cell rendering
     return flexRender(cell.column.columnDef.cell, cell.getContext());
   };
 
@@ -60,11 +110,19 @@ export function CustomTable<TData>({
           {header}
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
-              <th className='border-r border-gray-200'>
-                <div className='flex items-center justify-center'>
-                  <input type='checkbox' />
-                </div>
-              </th>
+              {enableRowSelection && (
+                <th className="px-4 py-2 border-r  border-gray-200 text-center">
+                  
+                  <input
+                    type="checkbox"
+                    ref={selectAllRef}
+                    onChange={(e) => toggleAll(e.target.checked)}
+                    checked={
+                      selectedRowIds.size === data.length && data.length > 0
+                    }
+                  />
+                </th>
+              )}
               {headerGroup.headers.map((header) => (
                 <th
                   key={header.id}
@@ -72,9 +130,7 @@ export function CustomTable<TData>({
                   onClick={header.column.getToggleSortingHandler()}
                 >
                   <div className="flex items-center cursor-pointer hover:bg-gray-100 p-2 rounded">
-                    {header.isPlaceholder
-                      ? null
-                      : renderHeaderContent(header)}
+                    {!header.isPlaceholder && renderHeaderContent(header)}
                     {{
                       asc: '^',
                       desc: '🔽',
@@ -86,20 +142,32 @@ export function CustomTable<TData>({
           ))}
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
-          {table.getRowModel().rows.map((row) => (
-            <tr key={row.id}>
-              <td className='border-r border-gray-200'>
-                <div className='flex items-center justify-center'>
-                  <input type='checkbox' />
-                </div>
-              </td>
-              {row.getVisibleCells().map((cell) => (
-                <td key={cell.id} className="px-6 py-4 whitespace-nowrap border-r border-gray-200">
-                  {renderCellContent(cell)}
-                </td>
-              ))}
-            </tr>
-          ))}
+          {table.getRowModel().rows.map((row) => {
+            const rowIndex = row.index.toString();
+            return (
+              <tr key={row.id}>
+                {enableRowSelection && (
+                  <td className="px-4 py-2  border-r  border-gray-200 text-center">
+                    <input
+                      type="checkbox"
+                      checked={selectedRowIds.has(rowIndex)}
+                      onChange={(e) =>
+                        toggleSingle(rowIndex, e.target.checked, row.original)
+                      }
+                    />
+                  </td>
+                )}
+                {row.getVisibleCells().map((cell) => (
+                  <td
+                    key={cell.id}
+                    className="px-6 py-4 whitespace-nowrap border-r border-gray-200"
+                  >
+                    {renderCellContent(cell)}
+                  </td>
+                ))}
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>

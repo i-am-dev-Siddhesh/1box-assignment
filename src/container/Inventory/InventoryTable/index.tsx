@@ -112,6 +112,8 @@ const InventoryTable = () => {
                 header={<Header />}
                 data={control._formValues.inventory}
                 columns={columns}
+                enableRowSelection={true}
+                onRowSelect={(selected) => console.log('Selected rows:', selected)}
                 className="shadow overflow-hidden border-b border-gray-200 rounded-lg"
             />
         </div>

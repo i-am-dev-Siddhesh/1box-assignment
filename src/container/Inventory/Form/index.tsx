@@ -69,23 +69,3 @@ const InventoryForm = () => {
 }
 
 export default InventoryForm
-
-const d = {
-    "ticketType": "VIP",
-    "quantity": "1",
-    "splitType": "None",
-    "seatingArrangement": "Reserved Seating",
-    "maxDisplayQuantity": "3",
-    "fanArea": "Home Fans",
-    "category": "Away Fans Section",
-    "sectionBlock": "Longside Lower Tier",
-    "row": "2",
-    "firstSeat": "2",
-    "faceValue": "22",
-    "payoutPrice": "2",
-    "benefits": "Early Entry",
-    "restrictions": "None",
-    "dateToShip": "1212-02-21",
-    "ticketsInHand": true,
-    "uploadTickets": {}
-}
