@@ -103,14 +103,17 @@ export function CustomTable<TData>({
   };
 
   return (
-    <div className={`overflow-x-hidden ${className} relative`}>
-      <table className="divide-y divide-gray-200 overflow-x-hidden">
+    <div className={`${className} relative`}>
+      <table className="divide-y divide-gray-200 o">
         <thead className="bg-gray-50 text-white">
           {header}
-          {/* {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id}>
+           
+        </thead>
+        <tbody className="bg-white max-w-[100vw] block overflow-x-scroll divide-y divide-gray-200 relative">
+          {table.getHeaderGroups().map((headerGroup) => (
+            <tr key={headerGroup.id} className=''>
               {enableRowSelection && (
-                <th className="px-4 py-2 border-r  border-gray-200 text-center">
+                <td className="px-4 py-2 border-r  border-gray-200 text-center">
                   <input
                     type="checkbox"
                     ref={selectAllRef}
@@ -119,10 +122,10 @@ export function CustomTable<TData>({
                       selectedRowIds.size === data.length && data.length > 0
                     }
                   />
-                </th>
+                </td>
               )}
               {headerGroup.headers.map((header) => (
-                <th
+                <td
                   key={header.id}
                   className="border-r border-gray-200 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   onClick={header.column.getToggleSortingHandler()}
@@ -134,12 +137,10 @@ export function CustomTable<TData>({
                       desc: '🔽',
                     }[header.column.getIsSorted() as string] ?? null}
                   </div>
-                </th>
+                </td>
               ))}
             </tr>
-          ))} */}
-        </thead>
-        <tbody className="bg-white max-w-[100vw] block overflow-x-scroll divide-y divide-gray-200 relative">
+          ))}
           {table.getRowModel().rows.map((row) => {
             const rowIndex = row.index.toString();
             return (
