@@ -38,5 +38,14 @@
     "ticketsInHand": true,
     "uploadTickets": {},
     "id": 1750484302634
+  },
+  {
+    "ticketType": "VIP",
+    "quantity": "5",
+    "seatingArrangement": "General Admission",
+    "category": "Home Fans Section",
+    "payoutPrice": "111",
+    "uploadTickets": {},
+    "id": 1750868517869
   }
 ]

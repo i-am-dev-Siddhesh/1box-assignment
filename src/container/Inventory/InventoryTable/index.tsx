@@ -5,7 +5,6 @@ import { InventoryService } from '@/services/inventory.service';
 import { type ColumnDef } from '@tanstack/react-table';
 import { useEffect, useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { FiUpload } from 'react-icons/fi';
 import inventoryFormFields from '../../../constants/form.fields';
 import Header from './Header';
 
@@ -77,37 +76,13 @@ const InventoryTable = () => {
             return column;
         });
 
-        // Add action column
-        const actionColumn: ColumnDef<InventoryItem> = {
-            id: 'actions',
-            header: 'Actions',
-            cell: ({ row }) => (
-                <div className="flex space-x-2">
-                    <button
-                        type="button"
-                        onClick={() => handleRowSubmit(row.original)}
-                        className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 text-sm rounded"
-                    >
-                        Submit Row
-                    </button>
-                    {row.original.uploadTickets && (
-                        <button
-                            type="button"
-                            className="flex items-center bg-green-500 hover:bg-green-600 text-white px-3 py-1 text-sm rounded"
-                        >
-                            <FiUpload className="mr-1" />
-                            Upload
-                        </button>
-                    )}
-                </div>
-            ),
-        };
 
-        return [...baseColumns, actionColumn];
+
+        return [...baseColumns];
     }, [control]);
 
     return (
-        <div className="p-4">
+        <div className="p-4 relative ">
             <CustomTable
                 header={<Header />}
                 data={control._formValues.inventory}

@@ -24,7 +24,6 @@ export const InventoryService = {
 
   async create(item: InventoryItem): Promise<InventoryItem> {
     try {
-      throw "msms"
       return await apiClient.post('/inventory', item);
     } catch (error) {
       throw new Error(

@@ -1,22 +1,21 @@
 'use client';
 
 import {
-  useReactTable,
+  flexRender,
   getCoreRowModel,
   getSortedRowModel,
+  useReactTable,
+  type Cell,
   type ColumnDef,
-  type SortingState,
   type ColumnSort,
   type Header,
-  type Cell,
-  flexRender,
+  type SortingState,
 } from '@tanstack/react-table';
-import React, {
+import {
   ReactNode,
-  useState,
-  useRef,
   useEffect,
-  ChangeEvent,
+  useRef,
+  useState
 } from 'react';
 
 interface ICustomTableProps<TData> {
@@ -104,15 +103,14 @@ export function CustomTable<TData>({
   };
 
   return (
-    <div className={`overflow-x-auto ${className}`}>
-      <table className="min-w-full divide-y divide-gray-200">
+    <div className={`overflow-x-hidden ${className} relative`}>
+      <table className="divide-y divide-gray-200 overflow-x-hidden">
         <thead className="bg-gray-50 text-white">
           {header}
-          {table.getHeaderGroups().map((headerGroup) => (
+          {/* {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {enableRowSelection && (
                 <th className="px-4 py-2 border-r  border-gray-200 text-center">
-                  
                   <input
                     type="checkbox"
                     ref={selectAllRef}
@@ -139,9 +137,9 @@ export function CustomTable<TData>({
                 </th>
               ))}
             </tr>
-          ))}
+          ))} */}
         </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
+        <tbody className="bg-white max-w-[100vw] block overflow-x-scroll divide-y divide-gray-200 relative">
           {table.getRowModel().rows.map((row) => {
             const rowIndex = row.index.toString();
             return (
@@ -165,6 +163,12 @@ export function CustomTable<TData>({
                     {renderCellContent(cell)}
                   </td>
                 ))}
+                <td className="sticky right-0  z-10 shadow-[inset_-2px_0_5px_rgba(0,0,0,0.1)] hover:bg-gray-50">
+                  <div className="flex space-x-2">
+                    <button className="px-2 py-1 bg-blue-500 text-white rounded">Edit</button>
+                    <button className="px-2 py-1 bg-red-500 text-white rounded">Delete</button>
+                  </div>
+                </td>
               </tr>
             );
           })}
