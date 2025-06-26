@@ -107,7 +107,7 @@ export function CustomTable<TData>({
       <table className="divide-y divide-gray-200 o">
         <thead className="bg-gray-50 text-white">
           {header}
-           
+
         </thead>
         <tbody className="bg-white max-w-[100vw] block overflow-x-scroll divide-y divide-gray-200 relative">
           {table.getHeaderGroups().map((headerGroup) => (
@@ -164,7 +164,7 @@ export function CustomTable<TData>({
                     {renderCellContent(cell)}
                   </td>
                 ))}
-                <td className="sticky right-0  z-10 shadow-[inset_-2px_0_5px_rgba(0,0,0,0.1)] hover:bg-gray-50">
+                <td className="sticky right-0  z-10 shadow-2xl p-2 hover:bg-gray-50">
                   <div className="flex space-x-2">
                     <button className="px-2 py-1 bg-blue-500 text-white rounded">Edit</button>
                     <button className="px-2 py-1 bg-red-500 text-white rounded">Delete</button>
