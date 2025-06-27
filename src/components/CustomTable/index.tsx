@@ -1,7 +1,6 @@
 'use client';
 
 import SelectionControlPanel from '@/container/Inventory/InventoryTable/SelectionControlPanel';
-import { InventoryService } from '@/services/inventory.service';
 import {
   flexRender,
   getCoreRowModel,
@@ -24,23 +23,23 @@ import { FaCaretLeft, FaCaretRight, FaHandPaper } from 'react-icons/fa';
 import { MdOutlineKeyboardArrowDown, MdOutlineKeyboardArrowUp } from 'react-icons/md';
 
 interface ICustomTableProps<TData> {
-  header?: ReactNode;
   data: TData[];
   columns: ColumnDef<TData>[];
   defaultSorting?: ColumnSort[];
   className?: string;
   onRowSelect?: (selectedRows: TData[]) => void;
   enableRowSelection?: boolean;
+  fetchData: ()=>void
 }
 
 export function CustomTable<TData>({
-  header,
   data,
   columns,
   defaultSorting = [],
   className = '',
   onRowSelect,
   enableRowSelection = false,
+  fetchData
 }: ICustomTableProps<TData>) {
   const [show, setShow] = useState(true)
   const [sorting, setSorting] = useState<SortingState>(defaultSorting);
@@ -108,78 +107,6 @@ export function CustomTable<TData>({
     return flexRender(cell.column.columnDef.cell, cell.getContext());
   };
 
-  const getSelectedData = () => {
-    return data.filter((_, idx) => selectedRowIds.has(idx.toString()));
-  };
-
-  const handleClone = async () => {
-    const selectedData: any = getSelectedData(); // Assuming this returns InventoryItem[]
-
-    if (!selectedData || selectedData.length === 0) {
-      console.warn('No items selected to clone.');
-      return;
-    }
-
-    // Remove `id` and adjust name for each item
-    const clonedItems = selectedData.map(({ id, createdAt, updatedAt, ...rest }: any) => ({
-      ...rest,
-      name: rest.name + ' - Copy',
-    }));
-
-    try {
-      const created = await InventoryService.bulkCreate(clonedItems);
-      console.log('Cloned items:', created);
-    } catch (error) {
-      console.error('Failed to clone items:', error);
-    }
-  };
-
-  const handleEdit = async () => {
-    const selectedData = getSelectedData();
-
-    if (!selectedData || selectedData.length === 0) {
-      console.warn('No items selected to update.');
-      return;
-    }
-
-    try {
-      const updatedItems = await Promise.all(
-        selectedData.map((item: any) =>
-          InventoryService.update(item.id, {
-            ...item,
-            name: item.name + ' (Edited)', // Example change
-          })
-        )
-      );
-
-      console.log('Updated items:', updatedItems);
-    } catch (error) {
-      console.error('Failed to update items:', error);
-    }
-  };
-  const handleDelete = async () => {
-    const selectedData = getSelectedData();
-
-    if (!selectedData || selectedData.length === 0) {
-      console.warn('No items selected to delete.');
-      return;
-    }
-
-    const idsToDelete = selectedData.map((item: any) => item.id);
-
-    try {
-      const result = await InventoryService.bulkDelete(idsToDelete);
-
-    } catch (error) {
-      console.error('Failed to delete items:', error);
-    }
-  };
-
-  const handleCancel = () => {
-    console.log('Operation canceled');
-    const selectedData = getSelectedData();
-    console.log('Cloning selected data:', selectedData);
-  };
 
   return (
     <div className={`${className} relative`}>
@@ -321,13 +248,11 @@ export function CustomTable<TData>({
       </table>
 
       <SelectionControlPanel
-        onClone={handleClone}
-        onEdit={handleEdit}
-        onDelete={handleDelete}
-        onCancel={handleCancel}
         toggleSelectAll={toggleAll}
         selectAll={selectedRowIds}
-      />
+        data={data}
+        selectedRowIds={selectedRowIds}
+        fetchData={fetchData} />
     </div>
   );
 }

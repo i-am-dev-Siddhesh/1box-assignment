@@ -6,8 +6,6 @@ import { type ColumnDef } from '@tanstack/react-table';
 import { useEffect, useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import inventoryFormFields from '../../../constants/form.fields';
-import Header from './Header';
-import SelectionControlPanel from './SelectionControlPanel';
 
 const InventoryTable = () => {
     const [items, setItems] = useState<any>([]);
@@ -17,13 +15,16 @@ const InventoryTable = () => {
         },
     });
 
-    useEffect(() => {
+    const fetchData = () => {
         InventoryService.getAll().then((resp) => {
             setItems(resp)
             reset({ inventory: resp });
         }).catch((error) => {
             console.error('Failed to fetch inventory:', error);
         })
+    }
+    useEffect(() => {
+        fetchData()
     }, []);
 
 
@@ -89,10 +90,10 @@ const InventoryTable = () => {
     return (
         <div className="p-4 relative ">
             <CustomTable
-                header={<Header />}
                 data={control._formValues.inventory}
                 columns={columns}
                 enableRowSelection={true}
+                fetchData={fetchData}
                 onRowSelect={(selected) => console.log('Selected rows:', selected)}
                 className="shadow overflow-hidden border-b border-gray-200 rounded-lg"
             />
