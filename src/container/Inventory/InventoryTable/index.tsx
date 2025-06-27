@@ -7,6 +7,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import inventoryFormFields from '../../../constants/form.fields';
 import Header from './Header';
+import SelectionControlPanel from './SelectionControlPanel';
 
 const InventoryTable = () => {
     const [items, setItems] = useState<any>([]);
@@ -81,6 +82,10 @@ const InventoryTable = () => {
         return [...baseColumns];
     }, [control]);
 
+
+
+
+
     return (
         <div className="p-4 relative ">
             <CustomTable
@@ -91,6 +96,7 @@ const InventoryTable = () => {
                 onRowSelect={(selected) => console.log('Selected rows:', selected)}
                 className="shadow overflow-hidden border-b border-gray-200 rounded-lg"
             />
+
         </div>
     );
 };

@@ -1,6 +1,6 @@
 [
   {
-    "ticketType": "VIP",
+    "ticketType": "Student",
     "quantity": "1",
     "splitType": "None",
     "seatingArrangement": "Reserved Seating",
@@ -17,7 +17,9 @@
     "dateToShip": "1212-02-21",
     "ticketsInHand": true,
     "uploadTickets": {},
-    "id": 1750484293399
+    "id": 1750484302634,
+    "name": "undefined (Edited)",
+    "updatedAt": "2025-06-27T05:45:59.250Z"
   },
   {
     "ticketType": "VIP",
@@ -37,15 +39,30 @@
     "dateToShip": "1212-02-21",
     "ticketsInHand": true,
     "uploadTickets": {},
-    "id": 1750484302634
+    "name": "undefined - Copy",
+    "id": 1751002983764,
+    "createdAt": "2025-06-27T05:43:03.725Z"
   },
   {
     "ticketType": "VIP",
-    "quantity": "5",
-    "seatingArrangement": "General Admission",
-    "category": "Home Fans Section",
-    "payoutPrice": "111",
+    "quantity": "1",
+    "splitType": "None",
+    "seatingArrangement": "Reserved Seating",
+    "maxDisplayQuantity": "3",
+    "fanArea": "Home Fans",
+    "category": "Away Fans Section",
+    "sectionBlock": "Longside Lower Tier",
+    "row": "2",
+    "firstSeat": "2",
+    "faceValue": "22",
+    "payoutPrice": "2",
+    "benefits": "Early Entry",
+    "restrictions": "None",
+    "dateToShip": "1212-02-21",
+    "ticketsInHand": true,
     "uploadTickets": {},
-    "id": 1750868517869
+    "name": "undefined - Copy",
+    "id": 1751002995914,
+    "createdAt": "2025-06-27T05:43:15.050Z"
   }
 ]
