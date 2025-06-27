@@ -1,34 +1,89 @@
 'use client';
 
+import SelectionControlPanel from '@/container/Inventory/InventoryTable/SelectionControlPanel';
 import {
-  useReactTable,
+  flexRender,
   getCoreRowModel,
   getSortedRowModel,
+  useReactTable,
+  type Cell,
   type ColumnDef,
-  type SortingState,
   type ColumnSort,
   type Header,
-  type Cell,
-  flexRender,
+  type SortingState,
 } from '@tanstack/react-table';
-import { ReactNode, useState } from 'react';
+import {
+  ReactNode,
+  useEffect,
+  useRef,
+  useState
+} from 'react';
+import { BsUpload } from 'react-icons/bs';
+import { FaCaretLeft, FaCaretRight, FaHandPaper } from 'react-icons/fa';
+import { MdOutlineKeyboardArrowDown, MdOutlineKeyboardArrowUp } from 'react-icons/md';
 
 interface ICustomTableProps<TData> {
-  header: ReactNode,
   data: TData[];
   columns: ColumnDef<TData>[];
   defaultSorting?: ColumnSort[];
   className?: string;
+  onRowSelect?: (selectedRows: TData[]) => void;
+  enableRowSelection?: boolean;
+  fetchData: ()=>void
 }
 
 export function CustomTable<TData>({
-  header,
   data,
   columns,
   defaultSorting = [],
   className = '',
+  onRowSelect,
+  enableRowSelection = false,
+  fetchData
 }: ICustomTableProps<TData>) {
+  const [show, setShow] = useState(true)
   const [sorting, setSorting] = useState<SortingState>(defaultSorting);
+  const [selectedRowIds, setSelectedRowIds] = useState<Set<string>>(new Set());
+
+  const selectAllRef = useRef<HTMLInputElement>(null);
+
+  // Set indeterminate state on select all checkbox
+  useEffect(() => {
+    if (selectAllRef.current) {
+      const total = data.length;
+      const selected = selectedRowIds.size;
+      selectAllRef.current.indeterminate = selected > 0 && selected < total;
+    }
+  }, [selectedRowIds, data.length]);
+
+  const toggleAll = (checked: boolean) => {
+    const allIds = data.map((_, idx) => idx.toString());
+    const newSelection: any = checked ? new Set(allIds) : new Set();
+    setSelectedRowIds(newSelection);
+    if (onRowSelect) {
+      onRowSelect(checked ? data : []);
+    }
+  };
+
+  const toggleSingle = (
+    rowId: string,
+    checked: boolean,
+    rowData: TData
+  ) => {
+    const updated = new Set(selectedRowIds);
+    if (checked) {
+      updated.add(rowId);
+    } else {
+      updated.delete(rowId);
+    }
+    setSelectedRowIds(updated);
+    if (onRowSelect) {
+      const selectedData = data.filter((_, idx) =>
+        updated.has(idx.toString())
+      );
+      onRowSelect(selectedData);
+    }
+  };
 
   const table = useReactTable({
     data,
@@ -49,59 +104,155 @@ export function CustomTable<TData>({
   };
 
   const renderCellContent = (cell: Cell<TData, unknown>) => {
-    // Use flexRender for proper cell rendering
     return flexRender(cell.column.columnDef.cell, cell.getContext());
   };
 
+
   return (
-    <div className={`overflow-x-auto ${className}`}>
-      <table className="min-w-full divide-y divide-gray-200">
+    <div className={`${className} relative`}>
+      <table className="divide-y divide-gray-200 border-separate">
         <thead className="bg-gray-50 text-white">
-          {header}
-          {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id}>
-              <th className='border-r border-gray-200'>
-                <div className='flex items-center justify-center'>
-                  <input type='checkbox' />
+          <tr className='sticky flex gap-5 left-0 top-0 w-[100%]  bg-[#130061] z-20'>
+            <th className='flex inherit bg-[#130061] items-center justify-center py-4 w-[50]  border-r border-gray-500'>
+              <div className=''>
+                <div className="w-8 h-8 border-2 border-white rounded-full flex items-center justify-center">
+                  <div className="w-4 h-4 rounded-full  bg-white "></div>
                 </div>
-              </th>
+              </div>
+            </th>
+            <th className='flex items-center pr-2 w-[30%] justify-center bg-[#130061] border-r border-gray-500'>
+              <div className="text-xl  font-bold">
+                Chelsea vs Arsenal - Premier League
+              </div>
+            </th>
+            <th className='flex items-center pr-5 justify-center bg-[#130061] border-r border-gray-500'>
+              <div className="">
+                <span className="mr-1">©</span>
+                <span>Sun, 10 Nov 2024</span>
+              </div>
+            </th>
+            <th className='flex items-center pr-5 justify-center bg-[#130061] border-r border-gray-500'>
+              <div className="">
+                <span className="mr-1">©</span>
+                <span>16:30</span>
+              </div>
+            </th>
+            {/* @ts-ignore */}
+            <th colSpan={2} className='flex w-[44%]  items-center  bg-[#130061]  border-r border-gray-500'>
+              <div className="flex items-center">
+                <span className="mr-2">©</span>
+                <span>Stamford Bridge, London, United Kingdom</span>
+              </div>
+            </th>
+
+            <th className='flex bg-[#130061] items-center justify-center py-4 w-[50] '>
+              {show ? <MdOutlineKeyboardArrowUp size={30} onClick={() => {
+                console.log('s');
+                setShow(false)
+              }} /> :
+                <MdOutlineKeyboardArrowDown size={30} onClick={() => setShow(true)} />}
+            </th>
+          </tr>
+
+        </thead>
+        <tbody className="bg-white max-w-[100vw] block overflow-x-scroll divide-y divide-gray-200 relative">
+          {table.getHeaderGroups().map((headerGroup) => (
+            <tr key={headerGroup.id} className=''>
+              {enableRowSelection && (
+                <td className="px-4 py-2 border-r border-gray-200 text-center">
+                  <input
+                    type="checkbox"
+                    ref={selectAllRef}
+                    onChange={(e) => toggleAll(e.target.checked)}
+                    checked={
+                      selectedRowIds.size === data.length && data.length > 0
+                    }
+                  />
+                </td>
+              )}
               {headerGroup.headers.map((header) => (
-                <th
+                <td
                   key={header.id}
                   className="border-r border-gray-200 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   onClick={header.column.getToggleSortingHandler()}
                 >
                   <div className="flex items-center cursor-pointer hover:bg-gray-100 p-2 rounded">
-                    {header.isPlaceholder
-                      ? null
-                      : renderHeaderContent(header)}
+                    {!header.isPlaceholder && renderHeaderContent(header)}
                     {{
                       asc: '^',
                       desc: '🔽',
                     }[header.column.getIsSorted() as string] ?? null}
                   </div>
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
-          {table.getRowModel().rows.map((row) => (
-            <tr key={row.id}>
-              <td className='border-r border-gray-200'>
-                <div className='flex items-center justify-center'>
-                  <input type='checkbox' />
-                </div>
-              </td>
-              {row.getVisibleCells().map((cell) => (
-                <td key={cell.id} className="px-6 py-4 whitespace-nowrap border-r border-gray-200">
-                  {renderCellContent(cell)}
                 </td>
               ))}
+              <td className={`${show ? 'sticky right-28 z-10 bg-white ' : 'none'} h-full  border-l  border-gray-200  `}>
+                <div className='w-18 flex justify-center '>
+                  {/* <FaHandPaper size={24} color='#34c7a0' /> */}
+                </div>
+              </td>
+
+              <td className={`${show ? 'sticky right-10 z-10 bg-white ' : 'none'} h-full  border-gray-200  `}>
+                <div className='w-18 flex justify-center'>
+                  <FaCaretLeft size={22} style={{
+                    position: "relative",
+                    right: 25
+                  }} color='#b4b7cb' />
+                  <FaCaretRight size={22} style={{
+                    position: "relative",
+                    right: 20
+                  }} color='#322275' />
+                </div>
+              </td>
+
             </tr>
           ))}
+          {table.getRowModel().rows.map((row) => {
+            const rowIndex = row.index.toString();
+            return (
+              <tr key={row.id}>
+                {enableRowSelection && (
+                  <td className="px-4 py-2 border-t border-r  border-gray-200 text-center">
+                    <input
+                      type="checkbox"
+                      checked={selectedRowIds.has(rowIndex)}
+                      onChange={(e) =>
+                        toggleSingle(rowIndex, e.target.checked, row.original)
+                      }
+                    />
+                  </td>
+                )}
+                {row.getVisibleCells().map((cell) => (
+                  <td
+                    key={cell.id}
+                    className="px-6 py-4 whitespace-nowrap border-t  border-r border-gray-200"
+                  >
+                    {renderCellContent(cell)}
+                  </td>
+                ))}
+
+                <td className={`${show ? 'sticky right-28 z-10 bg-white ' : 'none'} h-full border-t border-l  border-gray-200  `}>
+                  <div className='w-18 flex justify-center bg-red'>
+                    <FaHandPaper size={24} color='#34c7a0' />
+                  </div>
+                </td>
+
+                <td className={`${show ? 'sticky right-10 z-10 bg-white ' : 'none'} h-full border-t border-l  border-gray-200  `}>
+                  <div className='w-18 flex justify-center'>
+                    <BsUpload size={24} color="#9d96bd" />
+                  </div>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
+
+      <SelectionControlPanel
+        toggleSelectAll={toggleAll}
+        selectAll={selectedRowIds}
+        data={data}
+        selectedRowIds={selectedRowIds}
+        fetchData={fetchData} />
     </div>
   );
 }
